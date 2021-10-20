@@ -1,0 +1,24 @@
+{
+  "name": "wolliz",
+  "version": "1.0.0",
+  "description": "Zillow Clone",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganbaKotori/wolliz.git"
+  },
+  "author": "Alex Ramirez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ganbaKotori/wolliz/issues"
+  },
+  "homepage": "https://github.com/ganbaKotori/wolliz#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "password-generator": "^2.3.2"
+  }
+}
