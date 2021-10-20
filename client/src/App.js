@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import './App.css';
+import Map from './Map';
 
 class App extends Component {
   // Initialize state
@@ -21,6 +27,24 @@ class App extends Component {
     const { passwords } = this.state;
 
     return (
+      <>
+        <Navbar bg="dark" variant="dark">
+    <Container>
+    <Navbar.Brand href="#home">Wolliz</Navbar.Brand>
+    <Nav className="me-auto">
+      <Nav.Link href="#home">Home</Nav.Link>
+      <Nav.Link href="#features">Features</Nav.Link>
+      <Nav.Link href="#pricing">Pricing</Nav.Link>
+    </Nav>
+    </Container>
+  </Navbar>
+  <Container>
+    <Row>
+      <Col>
+      <Map />
+      </Col>
+    </Row>
+  </Container>
       <div className="App">
         {/* Render the passwords if we have them */}
         {passwords.length ? (
@@ -57,6 +81,7 @@ class App extends Component {
           </div>
         )}
       </div>
+      </>
     );
   }
 }
