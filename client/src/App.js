@@ -6,6 +6,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import './App.css';
 import Map from './Map';
+import Form from 'react-bootstrap/Form';
+import Offcanvas from './Offcanvas';
 
 class App extends Component {
   // Initialize state
@@ -35,14 +37,21 @@ class App extends Component {
       <Nav.Link href="#home">Buy</Nav.Link>
       <Nav.Link href="#features">Rent</Nav.Link>
       <Nav.Link href="#pricing">Sell</Nav.Link>
-      <Nav.Link href="#pricing">Tool</Nav.Link>
     </Nav>
     </Container>
   </Navbar>
-  <Container>
+  <Container
+    fluid
+    className="body-container"
+  >
     <Row>
-      <Col>
+      <Col xs={12} md={8} className="p-0 m-0">
       <Map />
+      </Col>
+      <Col xs={12} md={4}>
+      <Row className="p-3">
+      <Offcanvas/>
+    </Row>
       </Col>
     </Row>
   </Container>

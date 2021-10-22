@@ -29,3 +29,17 @@ h1 {
 .more:active {
   background-color: #FFEFA9;
 }
+
+.form-switch.form-switch-xl .form-check-input {
+  height: 2.5rem;
+  width: calc(4rem + 0.75rem);
+  border-radius: 5rem;
+}
+
+.form-switch.form-switch-xl {
+  margin-bottom: 2rem; /* JUST FOR STYLING PURPOSE */
+}
+
+.body-container {
+  height: 300px;
+}

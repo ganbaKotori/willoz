@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
 
+
 const Map = () => {
+    var mapboxTiles = "https://api.mapbox.com/styles/v1/kotori13378/ckkdzuclh0s6a17nv61p7tiuv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoia290b3JpMTMzNzgiLCJhIjoiY2tqd2RwYzF1MGVlbDMwbmxiYWR2NWkzZSJ9.s4hAHjSw-Avhn0EpX6hRUg";
     // Create our map tile layer:
-    const MAP_TILE = L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    const MAP_TILE = L.tileLayer(mapboxTiles, {
+        attribution: 'Created by Alexander Ramirez'
     });
 
     // Define the styles that are to be passed to the map instance:
     const mapStyles = {
         overflow: "hidden",
         width: "100%",
-        height: "100vh"
+        height: "92vh"
     };
 
     const mapParams = {
-        center: [37.0902, -95.7129],
-        zoom: 3,
+        center: [34.052235, -118.243683],
+        zoom: 10,
         zoomControl: false,
         maxBounds: L.latLngBounds(L.latLng(-150, -240), L.latLng(150, 240)),
         layers: [MAP_TILE]
