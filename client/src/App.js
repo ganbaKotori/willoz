@@ -8,6 +8,7 @@ import './App.css';
 import Map from './Map';
 import Form from 'react-bootstrap/Form';
 import Offcanvas from './Offcanvas';
+import SearchBar from './Components/SearchBar';
 
 class App extends Component {
   // Initialize state
@@ -16,6 +17,15 @@ class App extends Component {
   // Fetch passwords after first mount
   componentDidMount() {
     this.getPasswords();
+      navigator.geolocation.getCurrentPosition((e) => {
+    this.setState({ 
+      geoLocation: e.coords
+    });
+  }, async (err) => {
+    this.setState({
+      geoError: err
+    });
+  });
   }
 
   getPasswords = () => {
@@ -44,6 +54,11 @@ class App extends Component {
     fluid
     className="body-container"
   >
+    <Row>
+      <Col>
+        <SearchBar/>
+      </Col>
+    </Row>
     <Row>
       <Col xs={12} md={8} className="p-0 m-0">
       <Map />

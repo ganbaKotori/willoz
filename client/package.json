@@ -9,10 +9,14 @@
     "bootstrap": "^5.1.1",
     "esri-leaflet-geocoder": "^3.1.1",
     "leaflet": "^1.7.1",
+    "leaflet-draw": "^1.0.4",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-rc.1",
     "react-dom": "^17.0.2",
+    "react-leaflet": "^3.2.2",
+    "react-leaflet-draw": "^0.19.8",
     "react-scripts": "4.0.3",
+    "react-search-box": "^2.0.3",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -27,17 +31,10 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "proxy": "http://localhost:5000"
 }

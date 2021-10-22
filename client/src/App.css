@@ -43,3 +43,10 @@ h1 {
 .body-container {
   height: 300px;
 }
+
+/* I didn't create this class. It came with react-leaflet */
+.leaflet-container {
+  overflow: hidden;
+  width: 100%;
+  height: 92vh;
+}
