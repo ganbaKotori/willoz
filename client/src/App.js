@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,7 +12,7 @@ import SearchBar from './Components/SearchBar';
 
 class App extends Component {
   // Initialize state
-  state = { passwords: [] }
+  state = { passwords: [], map_data: [] }
 
   // Fetch passwords after first mount
   componentDidMount() {
@@ -33,6 +33,10 @@ class App extends Component {
     fetch('/api/passwords')
       .then(res => res.json())
       .then(passwords => this.setState({ passwords }));
+  }
+
+  addMenuItem = (map_item) => {
+    this.setState(({ map_data }) => ({ map_data: { ...map_data, map_item } }));
   }
 
   render() {
@@ -61,11 +65,11 @@ class App extends Component {
     </Row>
     <Row>
       <Col xs={12} md={8} className="p-0 m-0">
-      <Map />
+      <Map latlngs={[34.152235, -118.043683]}/>
       </Col>
       <Col xs={12} md={4}>
       <Row className="p-3">
-      <Offcanvas/>
+      <Offcanvas addMenuItem={this.addMenuItem}/>
     </Row>
       </Col>
     </Row>

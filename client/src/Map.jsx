@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, FeatureGroup, LayersControl } from 'react-leaflet';
-import { EditControl } from 'react-leaflet-draw'
+import { EditControl } from 'react-leaflet-draw';
 import "leaflet-draw/dist/leaflet.draw.css";
-import { circle } from "leaflet";
 
 class Map extends React.Component {
     constructor() {
@@ -23,8 +22,16 @@ class Map extends React.Component {
         markers.push(e.latlng)
         this.setState({ markers })
     }
+
     render() {
         var mapboxTiles = "https://api.mapbox.com/styles/v1/kotori13378/ckkdzuclh0s6a17nv61p7tiuv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoia290b3JpMTMzNzgiLCJhIjoiY2tqd2RwYzF1MGVlbDMwbmxiYWR2NWkzZSJ9.s4hAHjSw-Avhn0EpX6hRUg";
+
+        const { latlngs } = this.props;
+
+        console.log('NEW LATLNG IN MAP', latlngs)
+
+
+        console.log(latlngs);
 
         const _onCreate = e => {
             console.log(e);
@@ -32,7 +39,6 @@ class Map extends React.Component {
             if (layerType === "polygon") {
                 const { _leaflet_id } = layer;
                 console.log(layer.getLatLngs()[0])
-
                 this.setMapLayers((layers) => [...layers, { id: _leaflet_id, latlngs: layer.getLatLngs()[0] }])
             }
         }
@@ -47,7 +53,7 @@ class Map extends React.Component {
 
         return (
             <>
-                <MapContainer center={[34.052235, -118.243683]} zoom={10} scrollWheelZoom={false}>
+                <MapContainer center={latlngs} zoom={10} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='Created by Alexander Ramirez'
                         url={mapboxTiles}
