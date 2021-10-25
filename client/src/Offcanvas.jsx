@@ -8,11 +8,18 @@ import Col from 'react-bootstrap/Col';
 function Example(props) {
     const [show, setShow] = useState(false);
     const [checked, setChecked] = useState(false);
+    const [incomeSwitch, setIncomeSwitch] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleCheck = () => { console.log(checked); 
         props.addMenuItem("la"); setChecked(!checked) };
+
+    const handleIncomeSwitch = () => { 
+        console.log(checked); 
+        props.getIncome();  
+        setChecked(!checked) 
+    };
 
     return (
         <>
@@ -29,7 +36,7 @@ function Example(props) {
                         <Col>
                             <Form.Check
                                 checked={checked}
-                                onChange={handleCheck}
+                                onChange={handleIncomeSwitch}
                                 type="switch"
                                 id="income-switch"
                                 label="Income"

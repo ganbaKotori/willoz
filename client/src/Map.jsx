@@ -8,13 +8,25 @@ class Map extends React.Component {
         super();
         this.state = {
             markers: [[51.505, -0.09]],
-            mapLayers: null
+            mapLayers: null,
+            map : null,
+            map_bounds: null
         };
         this.setMapLayers = this.setMapLayers.bind(this);
+        this.setMap = this.setMap.bind(this);
+        //this.setMapBounds = this.setMapBounds.bind(this);
     }
 
     setMapLayers(event) {
         this.setState({ mapLayers: event });
+    }
+
+    setMap(map_obj) {
+        this.setState({ map: map_obj });
+        this.setState({ map_bounds: map_obj.getBounds() });
+        console.log(map_obj.getBounds());
+
+        
     }
 
     addMarker = (e) => {
@@ -28,12 +40,13 @@ class Map extends React.Component {
 
         const { latlngs } = this.props;
 
-        console.log('NEW LATLNG IN MAP', latlngs)
+        console.log('NEW LATLNG IN MAP', latlngs);
 
 
         console.log(latlngs);
 
         const _onCreate = e => {
+            console.log(this.state.map.getBounds())
             console.log(e);
             const { layerType, layer } = e;
             if (layerType === "polygon") {
@@ -41,6 +54,7 @@ class Map extends React.Component {
                 console.log(layer.getLatLngs()[0])
                 this.setMapLayers((layers) => [...layers, { id: _leaflet_id, latlngs: layer.getLatLngs()[0] }])
             }
+
         }
 
         const _onEdited = e => {
@@ -53,7 +67,11 @@ class Map extends React.Component {
 
         return (
             <>
-                <MapContainer center={latlngs} zoom={10} scrollWheelZoom={false}>
+                <MapContainer 
+                    whenCreated={this.setMap} 
+                    center={latlngs} zoom={10} 
+                    scrollWheelZoom={false}
+                >
                     <TileLayer
                         attribution='Created by Alexander Ramirez'
                         url={mapboxTiles}
@@ -74,6 +92,14 @@ class Map extends React.Component {
                         />
                     </FeatureGroup>
                     {this.state.markers.map((position, idx) =>
+                        <Marker key={`marker-${idx}`} position={position}>
+                            <Popup>
+                                <span>A pretty CSS3 popup. <br /> Easily customizable.</span>
+                            </Popup>
+                        </Marker>
+                    )}
+
+                    {this.props.income.map((position, idx) =>
                         <Marker key={`marker-${idx}`} position={position}>
                             <Popup>
                                 <span>A pretty CSS3 popup. <br /> Easily customizable.</span>
