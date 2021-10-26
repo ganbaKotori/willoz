@@ -17,8 +17,15 @@ function Example(props) {
 
     const handleIncomeSwitch = () => { 
         console.log(checked); 
-        props.getIncome();  
+          
         setChecked(!checked) 
+        if (!checked == true){
+            console.log(!checked)
+            props.getIncome();
+        } else {
+            console.log(!checked)
+            props.clearIncome();
+        }
     };
 
     return (
@@ -44,6 +51,7 @@ function Example(props) {
                                 className="form-switch-xl"
                             />
                             <Form.Check
+                                disabled={true}
                                 type="switch"
                                 id="incidents-switch"
                                 label="Incidents"
@@ -51,6 +59,7 @@ function Example(props) {
                                 className="form-switch-xl"
                             />
                             <Form.Check
+                                disabled={true}
                                 type="switch"
                                 id="schools-switch"
                                 label="Schools"
@@ -58,6 +67,7 @@ function Example(props) {
                                 className="form-switch-xl"
                             />
                             <Form.Check
+                                disabled={true}
                                 type="switch"
                                 id="demographic-switch"
                                 label="Demographic"

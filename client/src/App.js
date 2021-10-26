@@ -49,12 +49,8 @@ class App extends Component {
     // console.log('LATLNGS FROM MAP TO GETIMCONE', element.state.map)
 
     const childelement = this.ChildElement.current;
-    const map_bounds = childelement.state.map_bounds
-    console.log(childelement.state.map_bounds);
-    console.log(['income data']);
-    this.setState({ 
-      income: [[34.152235, -118.043683]]
-    });
+    const map_bounds = childelement.getMapBounds()
+    console.log("bounnds from ref functions",JSON.stringify(childelement.getMapBounds()))
 
     let res = await axios.get("https://public.gis.lacounty.gov/public/rest/services/LACounty_Dynamic/Demographics/MapServer/12/query?where=1%3D1&outFields=*&geometry=" +
     map_bounds._southWest.lng +
@@ -67,7 +63,6 @@ class App extends Component {
     "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json");
 
     let data = res.data;
-    //console.log(data.features);
     this.addHouseholdMarkers(data.features)
         // $.ajax({
         //   url:
@@ -85,6 +80,10 @@ class App extends Component {
         // }).done(function (data) {
         //   console.log(data);
         // });
+  }
+
+  clearIncome = () => {
+    this.setState({income : []})
   }
 
   addHouseholdMarkers(data) {
@@ -147,30 +146,12 @@ class App extends Component {
       for (var index in latLngs) {
         reversedLatLngs.push(latLngs[index].reverse());
       }
-  
-      var polygon = L.polygon(reversedLatLngs, { color: color, opacity: 1, weight: 2, fillOpacity: 0.3 }).on("mouseover", function(e) {
-          var average2 = average
-          //customTip(average2,this);
-        }).bindPopup("$" + Math.ceil(average))
 
-      income_polygons.push(polygon)
+      income_polygons.push({"position" : reversedLatLngs, "color" : color, "average" : average})
     }
-    console.log(income_polygons)
-    this.setState({income : [[34.152235, -118.043683]]})
-    //console.log(this.state.income)
+    this.setState({income : income_polygons})
   }
-
-  // customTip(average2, pop) {
-    
-  //   pop.unbindTooltip();
-  //   if (!pop.isPopupOpen()){
-      
-  //     pop.bindTooltip("$" + Math.ceil(average2)).openTooltip();
-  //   }
-      
-  // }
   
-
   addMenuItem = (map_item) => {
     this.setState(({ map_data }) => ({ map_data: { ...map_data, map_item } }));
   }
@@ -205,7 +186,7 @@ class App extends Component {
       </Col>
       <Col xs={12} md={4}>
         <Row className="p-3">
-        <Offcanvas addMenuItem={this.addMenuItem} getIncome={this.getIncome}/>
+        <Offcanvas addMenuItem={this.addMenuItem} getIncome={this.getIncome} clearIncome={this.clearIncome}/>
       </Row>
       </Col>
     </Row>

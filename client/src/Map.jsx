@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, FeatureGroup, LayersControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, FeatureGroup, LayersControl, Polygon, Tooltip } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import "leaflet-draw/dist/leaflet.draw.css";
 
@@ -14,6 +14,8 @@ class Map extends React.Component {
         };
         this.setMapLayers = this.setMapLayers.bind(this);
         this.setMap = this.setMap.bind(this);
+        this.setBounds = this.setBounds.bind(this);
+        this.getMapBounds = this.getMapBounds.bind(this);
         //this.setMapBounds = this.setMapBounds.bind(this);
     }
 
@@ -24,9 +26,16 @@ class Map extends React.Component {
     setMap(map_obj) {
         this.setState({ map: map_obj });
         this.setState({ map_bounds: map_obj.getBounds() });
-        console.log(map_obj.getBounds());
 
-        
+    }
+
+    getMapBounds(){
+        return this.state.map.getBounds()
+    }
+
+    setBounds() {
+        console.log(" moved")
+
     }
 
     addMarker = (e) => {
@@ -40,13 +49,7 @@ class Map extends React.Component {
 
         const { latlngs } = this.props;
 
-        console.log('NEW LATLNG IN MAP', latlngs);
-
-
-        console.log(latlngs);
-
         const _onCreate = e => {
-            console.log(this.state.map.getBounds())
             console.log(e);
             const { layerType, layer } = e;
             if (layerType === "polygon") {
@@ -71,6 +74,7 @@ class Map extends React.Component {
                     whenCreated={this.setMap} 
                     center={latlngs} zoom={10} 
                     scrollWheelZoom={false}
+                    moveend={this.setBounds}
                 >
                     <TileLayer
                         attribution='Created by Alexander Ramirez'
@@ -99,12 +103,10 @@ class Map extends React.Component {
                         </Marker>
                     )}
 
-                    {this.props.income.map((position, idx) =>
-                        <Marker key={`marker-${idx}`} position={position}>
-                            <Popup>
-                                <span>A pretty CSS3 popup. <br /> Easily customizable.</span>
-                            </Popup>
-                        </Marker>
+                    {this.props.income.map((income, idx) =>
+                        <Polygon key={`marker-${idx}`} pathOptions={{ fillColor: income['color'] }} positions={income['position']}>
+                            <Tooltip sticky>${income['average']}</Tooltip>
+                        </Polygon>
                     )}
                 </MapContainer>
 
