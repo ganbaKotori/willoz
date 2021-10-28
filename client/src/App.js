@@ -8,7 +8,7 @@ import './App.css';
 import Map from './Map';
 import Offcanvas from './Offcanvas';
 import SearchBar from './Components/SearchBar';
-import L from 'leaflet'
+import HomeCard from './Components/HomeCard';
 const axios = require('axios');
 
 class App extends Component {
@@ -17,7 +17,7 @@ class App extends Component {
     this.ChildElement = React.createRef();
   }
   // Initialize state
-  state = { passwords: [], map_data: [], income: [], map_bounds: null }
+  state = { passwords: [], map_data: [], income: [], demographic : [], school: [], map_bounds: null }
 
   
 
@@ -45,12 +45,8 @@ class App extends Component {
   }
 
   getIncome = async () => {
-    // const element = this.myRef.current;
-    // console.log('LATLNGS FROM MAP TO GETIMCONE', element.state.map)
-
     const childelement = this.ChildElement.current;
-    const map_bounds = childelement.getMapBounds()
-    console.log("bounnds from ref functions",JSON.stringify(childelement.getMapBounds()))
+    const map_bounds = childelement.getMapBounds();
 
     let res = await axios.get("https://public.gis.lacounty.gov/public/rest/services/LACounty_Dynamic/Demographics/MapServer/12/query?where=1%3D1&outFields=*&geometry=" +
     map_bounds._southWest.lng +
@@ -61,29 +57,68 @@ class App extends Component {
     "," +
     map_bounds._northEast.lat +
     "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json");
+    this.addHouseholdMarkers(res.data.features)
 
-    let data = res.data;
-    this.addHouseholdMarkers(data.features)
-        // $.ajax({
-        //   url:
-        // "https://public.gis.lacounty.gov/public/rest/services/LACounty_Dynamic/Demographics/MapServer/12/query?where=1%3D1&outFields=*&geometry=" +
-        // map_bounds._southWest.lng +
-        // "," +
-        // map_bounds._southWest.lat +
-        // "," +
-        // map_bounds._northEast.lng +
-        // "," +
-        // map_bounds._northEast.lat +
-        // "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json",
-        //   type: "GET",
-        //   data: {},
-        // }).done(function (data) {
-        //   console.log(data);
-        // });
+  }
+
+  getDemographic = async () => {
+    const childelement = this.ChildElement.current;
+    const map_bounds = childelement.getMapBounds();
+    let res = await axios.get(
+          "https://public.gis.lacounty.gov/public/rest/services/LACounty_Dynamic/Demographics/MapServer/11/query?where=1%3D1&outFields=*&geometry=" +
+          map_bounds._southWest.lng +
+          "," +
+          map_bounds._southWest.lat +
+          "," +
+          map_bounds._northEast.lng +
+          "," +
+          map_bounds._northEast.lat +
+          "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json")
+    console.log(res)
+    this.addDemographicMarkers(res.data.features)
+  }
+
+  getSchool = async () => {
+    const childelement = this.ChildElement.current;
+    const map_bounds = childelement.getMapBounds();
+    let res = await axios.get("https://maps.lacity.org/lahub/rest/services/LAUSD_Schools/MapServer/0/query?where=1%3D1&outFields=*&geometry=" +
+      map_bounds._southWest.lng +
+      "," +
+      map_bounds._southWest.lat +
+      "," +
+      map_bounds._northEast.lng +
+      "," +
+      map_bounds._northEast.lat + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json")
+    console.log(res)
   }
 
   clearIncome = () => {
     this.setState({income : []})
+  }
+
+  clearDemographic = () => {
+    this.setState({demographic : []})
+  }
+
+  clearSchool = () => {
+    this.setState({school : []})
+  }
+
+  addDemographicMarkers(data) {
+    let demographicPolygonData = [];
+    for (var key in data) {
+      var latLngs = data[key].geometry.rings[0];
+      let reversedLatLngs = [];
+      for (var index in latLngs) {
+        reversedLatLngs.push(latLngs[index].reverse());
+      }
+      let demographicData = data[key].attributes;
+      console.log(demographicData)
+      demographicPolygonData.push({"position": reversedLatLngs, "data" : demographicData})
+    }
+    
+    this.setState({demographic : demographicPolygonData})
+    console.log(this.state.demographic)
   }
 
   addHouseholdMarkers(data) {
@@ -157,8 +192,6 @@ class App extends Component {
   }
 
   render() {
-    const { passwords } = this.state;
-
     return (
       <>
         <Navbar bg="dark" variant="dark">
@@ -182,11 +215,29 @@ class App extends Component {
     </Row>
     <Row>
       <Col xs={12} md={8} className="p-0 m-0">
-        <Map ref={this.ChildElement} latlngs={[34.152235, -118.043683]} income={this.state.income} school={[]} demographic={[]} incidents={[]} />
+        <Map 
+          ref={this.ChildElement} 
+          latlngs={[34.152235, -118.043683]} 
+          income={this.state.income} 
+          school={[]} 
+          demographic={this.state.demographic} 
+          incidents={[]} />
       </Col>
       <Col xs={12} md={4}>
         <Row className="p-3">
-        <Offcanvas addMenuItem={this.addMenuItem} getIncome={this.getIncome} clearIncome={this.clearIncome}/>
+        <Offcanvas 
+          getIncome={this.getIncome} 
+          clearIncome={this.clearIncome}
+          getDemographic={this.getDemographic} 
+          clearDemographic={this.clearDemographic}
+          getSchool={this.getSchool}
+          clearSchool={this.clearSchool}
+        />
+      </Row>
+      <Row>
+        {/*<HomeCard 
+          homeData={{"address" : '1234 1st street'}}
+        />*/}
       </Row>
       </Col>
     </Row>

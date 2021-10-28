@@ -57,7 +57,6 @@ class Map extends React.Component {
                 console.log(layer.getLatLngs()[0])
                 this.setMapLayers((layers) => [...layers, { id: _leaflet_id, latlngs: layer.getLatLngs()[0] }])
             }
-
         }
 
         const _onEdited = e => {
@@ -108,6 +107,13 @@ class Map extends React.Component {
                             <Tooltip sticky>${income['average']}</Tooltip>
                         </Polygon>
                     )}
+                    {this.props.demographic.map((demographic, idx) =>
+                        <Polygon key={`marker-${idx}`} positions={demographic['position']}>
+                            <Tooltip sticky>Demographic</Tooltip>
+                        </Polygon>
+                    )}
+
+                    demographic
                 </MapContainer>
 
             </>

@@ -5,26 +5,39 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-function Example(props) {
+function ToolsOffcanvas(props) {
     const [show, setShow] = useState(false);
     const [checked, setChecked] = useState(false);
-    const [incomeSwitch, setIncomeSwitch] = useState(false);
+    const [demographicCheck, setDemographicCheck] = useState(false);
+    const [schoolCheck, setSchoolCheck] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleCheck = () => { console.log(checked); 
-        props.addMenuItem("la"); setChecked(!checked) };
 
     const handleIncomeSwitch = () => { 
-        console.log(checked); 
-          
         setChecked(!checked) 
         if (!checked == true){
-            console.log(!checked)
             props.getIncome();
         } else {
-            console.log(!checked)
             props.clearIncome();
+        }
+    };
+
+    const handleDemographicSwitch = () => { 
+        setDemographicCheck(!demographicCheck) 
+        if (!demographicCheck == true){
+            props.getDemographic();
+        } else {
+            props.clearDemographic();
+        }
+    };
+
+    const handleSchoolSwitch = () => { 
+        setSchoolCheck(!schoolCheck) 
+        if (!schoolCheck == true){
+            props.getSchool();
+        } else {
+            props.clearSchool();
         }
     };
 
@@ -59,7 +72,7 @@ function Example(props) {
                                 className="form-switch-xl"
                             />
                             <Form.Check
-                                disabled={true}
+                                onChange={handleSchoolSwitch}
                                 type="switch"
                                 id="schools-switch"
                                 label="Schools"
@@ -67,7 +80,7 @@ function Example(props) {
                                 className="form-switch-xl"
                             />
                             <Form.Check
-                                disabled={true}
+                                onChange={handleDemographicSwitch}
                                 type="switch"
                                 id="demographic-switch"
                                 label="Demographic"
@@ -82,4 +95,4 @@ function Example(props) {
     );
 }
 
-export default Example;
+export default ToolsOffcanvas;
