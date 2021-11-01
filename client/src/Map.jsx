@@ -113,6 +113,11 @@ class Map extends React.Component {
                         </Polygon>
                     )}
 
+                    {this.props.school.map((school, idx) =>
+                        <Marker key={`marker-${idx}`} position={school['position']}>
+                        </Marker>
+                    )}
+
                     demographic
                 </MapContainer>
 

@@ -89,7 +89,8 @@ class App extends Component {
       map_bounds._northEast.lng +
       "," +
       map_bounds._northEast.lat + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json")
-    console.log(res)
+    console.log(res.data.features)
+    this.addSchoolMarkers(res.data.features)
   }
 
   clearIncome = () => {
@@ -186,6 +187,18 @@ class App extends Component {
     }
     this.setState({income : income_polygons})
   }
+
+  addSchoolMarkers(data) {
+    var schoolMarkers = []
+    for (var key in data) {
+      var schoolMarker = {
+        "position" : [data[key].geometry.y, data[key].geometry.x]
+      }
+  
+        schoolMarkers.push(schoolMarker);
+    }
+    this.setState({school : schoolMarkers})
+  }
   
   addMenuItem = (map_item) => {
     this.setState(({ map_data }) => ({ map_data: { ...map_data, map_item } }));
@@ -219,7 +232,7 @@ class App extends Component {
           ref={this.ChildElement} 
           latlngs={[34.152235, -118.043683]} 
           income={this.state.income} 
-          school={[]} 
+          school={this.state.school} 
           demographic={this.state.demographic} 
           incidents={[]} />
       </Col>
