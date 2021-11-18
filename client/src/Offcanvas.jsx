@@ -64,14 +64,6 @@ function ToolsOffcanvas(props) {
                                 className="form-switch-xl"
                             />
                             <Form.Check
-                                disabled={true}
-                                type="switch"
-                                id="incidents-switch"
-                                label="Incidents"
-                                size="lg"
-                                className="form-switch-xl"
-                            />
-                            <Form.Check
                                 onChange={handleSchoolSwitch}
                                 type="switch"
                                 id="schools-switch"

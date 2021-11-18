@@ -9,16 +9,27 @@ import Map from './Map';
 import Offcanvas from './Offcanvas';
 import SearchBar from './Components/SearchBar';
 import HomeCard from './Components/HomeCard';
+import Place from './Components/Place';
+import PlaceFinder from './Components/PlaceFinder';
+import ReactSearchBox from 'react-search-box';
 const axios = require('axios');
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.ChildElement = React.createRef();
+    this.handler = this.handler.bind(this);
   }
   // Initialize state
-  state = { passwords: [], map_data: [], income: [], demographic : [], school: [], map_bounds: null }
+  state = { zoom: 10, geoLocation: {}, searchResults: [], passwords: [], map_data: [], income: [], demographic : [], school: [], map_bounds: null, center: [34.0522, -118.2437]}
 
+
+  handler(center) {
+    this.setState({
+      center: center,
+      zoom: 17
+    })
+  }
   
 
   // Fetch passwords after first mount
@@ -204,6 +215,23 @@ class App extends Component {
     this.setState(({ map_data }) => ({ map_data: { ...map_data, map_item } }));
   }
 
+  setPlace(key) {
+    let place = this.state.searchResults.find((p) => p.id === key);
+    this.setState({
+      selectedPlace: place
+    })
+  }
+  
+  async onSearchChange(query) {
+    if (query.length > 0) {
+      let placeFinder = new PlaceFinder('mG11ZnzuVENJeDG4KLkn6QnNFA3Sx5RZ');
+      let results = (await placeFinder.getNearbyPlaces(query, this.state.geoLocation.latitude, this.state.geoLocation.longitude));
+      this.setState({
+        searchResults: results
+      });
+    }
+  }
+
   render() {
     return (
       <>
@@ -223,14 +251,17 @@ class App extends Component {
   >
     <Row>
       <Col>
-        <SearchBar/>
+        <SearchBar handler = {this.handler}/>
       </Col>
     </Row>
+
     <Row>
       <Col xs={12} md={8} className="p-0 m-0">
         <Map 
+          zoom={this.state.zoom}
+          key={this.state.center}
           ref={this.ChildElement} 
-          latlngs={[34.152235, -118.043683]} 
+          latlngs={this.state.center} 
           income={this.state.income} 
           school={this.state.school} 
           demographic={this.state.demographic} 

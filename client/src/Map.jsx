@@ -47,7 +47,7 @@ class Map extends React.Component {
     render() {
         var mapboxTiles = "https://api.mapbox.com/styles/v1/kotori13378/ckkdzuclh0s6a17nv61p7tiuv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoia290b3JpMTMzNzgiLCJhIjoiY2tqd2RwYzF1MGVlbDMwbmxiYWR2NWkzZSJ9.s4hAHjSw-Avhn0EpX6hRUg";
 
-        const { latlngs } = this.props;
+        const { latlngs, zoom } = this.props;
 
         const _onCreate = e => {
             console.log(e);
@@ -74,6 +74,7 @@ class Map extends React.Component {
                     center={latlngs} zoom={10} 
                     scrollWheelZoom={false}
                     moveend={this.setBounds}
+                    zoom={zoom}
                 >
                     <TileLayer
                         attribution='Created by Alexander Ramirez'
