@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import './App.css';
-import Map from './Map';
+import Map from './Components/Map';
 import Offcanvas from './Offcanvas';
 import SearchBar from './Components/SearchBar';
 import HomeCard from './Components/HomeCard';
@@ -250,22 +250,28 @@ class App extends Component {
     className="body-container"
   >
     <Row>
-      <Col>
-        <SearchBar handler = {this.handler}/>
-      </Col>
-    </Row>
+      <Col xs={12} md={8} >
+        <Row>
+          <Col>
+          <SearchBar handler = {this.handler}/>
+          </Col>
+          
+        </Row>
+        <Row>
+          <Col className="p-0 m-0">
+          <Map 
+            zoom={this.state.zoom}
+            key={this.state.center}
+            ref={this.ChildElement} 
+            latlngs={this.state.center} 
+            income={this.state.income} 
+            school={this.state.school} 
+            demographic={this.state.demographic} 
+            incidents={[]}
+            />
+          </Col>
 
-    <Row>
-      <Col xs={12} md={8} className="p-0 m-0">
-        <Map 
-          zoom={this.state.zoom}
-          key={this.state.center}
-          ref={this.ChildElement} 
-          latlngs={this.state.center} 
-          income={this.state.income} 
-          school={this.state.school} 
-          demographic={this.state.demographic} 
-          incidents={[]} />
+        </Row>
       </Col>
       <Col xs={12} md={4}>
         <Row className="p-3">

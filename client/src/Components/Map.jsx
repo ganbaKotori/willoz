@@ -119,6 +119,9 @@ class Map extends React.Component {
                         </Marker>
                     )}
 
+                    <Marker key={`marker-center`} position={latlngs}>
+                    </Marker>
+
                     demographic
                 </MapContainer>
 
