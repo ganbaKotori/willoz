@@ -2,6 +2,10 @@ import React, { Component, createRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import './App.css';
@@ -242,6 +246,7 @@ class App extends Component {
       <Nav.Link href="#home">Buy</Nav.Link>
       <Nav.Link href="#features">Rent</Nav.Link>
       <Nav.Link href="#pricing">Sell</Nav.Link>
+      <Nav.Link href="#pricing">About</Nav.Link>
     </Nav>
     </Container>
   </Navbar>
@@ -252,8 +257,19 @@ class App extends Component {
     <Row>
       <Col xs={12} md={8} >
         <Row>
-          <Col>
+          <Col xs={6} md={8}>
           <SearchBar handler = {this.handler}/>
+          </Col >
+          <Col xs={6} md={4} className="py-2">
+            <Button variant="primary">Locate Me</Button>{' '}
+            <Offcanvas 
+            getIncome={this.getIncome} 
+            clearIncome={this.clearIncome}
+            getDemographic={this.getDemographic} 
+            clearDemographic={this.clearDemographic}
+            getSchool={this.getSchool}
+            clearSchool={this.clearSchool}
+          />
           </Col>
           
         </Row>
@@ -275,14 +291,36 @@ class App extends Component {
       </Col>
       <Col xs={12} md={4}>
         <Row className="p-3">
-        <Offcanvas 
-          getIncome={this.getIncome} 
-          clearIncome={this.clearIncome}
-          getDemographic={this.getDemographic} 
-          clearDemographic={this.clearDemographic}
-          getSchool={this.getSchool}
-          clearSchool={this.clearSchool}
-        />
+        <Tabs defaultActiveKey="buy" id="uncontrolled-tab-example" className="mb-3">
+          <Tab eventKey="buy" title="Buy">
+            hi
+          </Tab>
+          <Tab eventKey="rent" title="Rent">
+            hi2
+          </Tab>
+          <Tab eventKey="sell" title="Sell">
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check type="checkbox" label="Check me out" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+          </Tab>
+        </Tabs>
       </Row>
       <Row>
         {/*<HomeCard 

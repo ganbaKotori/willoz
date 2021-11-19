@@ -43,7 +43,7 @@ function ToolsOffcanvas(props) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="secondary" onClick={handleShow}>
                 Tools
             </Button>
 
