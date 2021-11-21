@@ -16,6 +16,7 @@ import HomeCard from './Components/HomeCard';
 import Place from './Components/Place';
 import PlaceFinder from './Components/PlaceFinder';
 import ReactSearchBox from 'react-search-box';
+import {FaLocationArrow} from 'react-icons/fa'
 const axios = require('axios');
 
 class App extends Component {
@@ -24,9 +25,35 @@ class App extends Component {
     this.ChildElement = React.createRef();
     this.handler = this.handler.bind(this);
   }
-  // Initialize state
-  state = { zoom: 10, geoLocation: {}, searchResults: [], passwords: [], map_data: [], income: [], demographic : [], school: [], map_bounds: null, center: [34.0522, -118.2437]}
 
+  state = { zoom: 10, 
+            geoLocation: {}, 
+            searchResults: [], 
+            passwords: [], 
+            map_data: [], 
+            income: [], 
+            demographic : [], 
+            school: [], 
+            map_bounds: null, 
+            center: [34.0522, -118.2437],
+            houses: [{
+              "address" : "111 corner ave.",
+              "city" : "los angeles",
+              "state" : "CA",
+              "zip" : 90040,
+              "bedrooms" : 3,
+              "bathrooms" : 2,
+              "price" : 800000
+            }],
+            apartments: [{
+              "address" : "11341 south st.",
+              "city" : "Artesia",
+              "state" : "CA",
+              "zip" : 90701,
+              "bedrooms" : 2,
+              "bathrooms" : 1,
+              "rent" : 1400
+            }]}
 
   handler(center) {
     this.setState({
@@ -261,7 +288,7 @@ class App extends Component {
           <SearchBar handler = {this.handler}/>
           </Col >
           <Col xs={6} md={4} className="py-2">
-            <Button variant="primary">Locate Me</Button>{' '}
+            <Button variant="primary"><FaLocationArrow className="mb-1"/>{' '}Locate Me </Button>{' '}
             <Offcanvas 
             getIncome={this.getIncome} 
             clearIncome={this.clearIncome}
@@ -293,10 +320,10 @@ class App extends Component {
         <Row className="p-3">
         <Tabs defaultActiveKey="buy" id="uncontrolled-tab-example" className="mb-3">
           <Tab eventKey="buy" title="Buy">
-            hi
+            No Houses Available
           </Tab>
           <Tab eventKey="rent" title="Rent">
-            hi2
+            No Apartments Available
           </Tab>
           <Tab eventKey="sell" title="Sell">
           <Form>
