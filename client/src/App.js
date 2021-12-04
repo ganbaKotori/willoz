@@ -2,9 +2,6 @@ import React, { Component, createRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -12,11 +9,10 @@ import './App.css';
 import Map from './Components/Map';
 import Offcanvas from './Offcanvas';
 import SearchBar from './Components/SearchBar';
-import HomeCard from './Components/HomeCard';
-import Place from './Components/Place';
+import SideBar from './Components/Sidebar';
 import PlaceFinder from './Components/PlaceFinder';
-import ReactSearchBox from 'react-search-box';
-import {FaLocationArrow} from 'react-icons/fa'
+import {FaLocationArrow} from 'react-icons/fa';
+let la_housing_data = require('./data/la_housing_data.json')
 const axios = require('axios');
 
 class App extends Component {
@@ -36,24 +32,8 @@ class App extends Component {
             school: [], 
             map_bounds: null, 
             center: [34.0522, -118.2437],
-            houses: [{
-              "address" : "111 corner ave.",
-              "city" : "los angeles",
-              "state" : "CA",
-              "zip" : 90040,
-              "bedrooms" : 3,
-              "bathrooms" : 2,
-              "price" : 800000
-            }],
-            apartments: [{
-              "address" : "11341 south st.",
-              "city" : "Artesia",
-              "state" : "CA",
-              "zip" : 90701,
-              "bedrooms" : 2,
-              "bathrooms" : 1,
-              "rent" : 1400
-            }]}
+            houses: la_housing_data['houses'],
+            apartments: la_housing_data['apartments']}
 
   handler(center) {
     this.setState({
@@ -61,7 +41,6 @@ class App extends Component {
       zoom: 17
     })
   }
-  
 
   // Fetch passwords after first mount
   componentDidMount() {
@@ -75,8 +54,6 @@ class App extends Component {
       geoError: err
     });
   });
-
-  
   }
 
   getPasswords = () => {
@@ -89,7 +66,6 @@ class App extends Component {
   getIncome = async () => {
     const childelement = this.ChildElement.current;
     const map_bounds = childelement.getMapBounds();
-
     let res = await axios.get("https://public.gis.lacounty.gov/public/rest/services/LACounty_Dynamic/Demographics/MapServer/12/query?where=1%3D1&outFields=*&geometry=" +
     map_bounds._southWest.lng +
     "," +
@@ -194,7 +170,6 @@ class App extends Component {
         B19013e1,
       }))(data[key].attributes);
   
-      //console.log(incomes)
       for (const [key, value] of Object.entries(incomes)) {
         //console.log(`${key}: ${value}`);
         if (value != 0) {
@@ -202,8 +177,6 @@ class App extends Component {
           sum += value;
         }
       }
-      // console.log(count);
-      // console.log(sum);
       let average = sum / count;
   
       var color;
@@ -272,14 +245,13 @@ class App extends Component {
     <Nav className="me-auto">
       <Nav.Link href="#home">Buy</Nav.Link>
       <Nav.Link href="#features">Rent</Nav.Link>
-      <Nav.Link href="#pricing">Sell</Nav.Link>
-      <Nav.Link href="#pricing">About</Nav.Link>
+      <Nav.Link href="#sell">Sell</Nav.Link>
+      <Nav.Link href="#about">About</Nav.Link>
     </Nav>
     </Container>
   </Navbar>
   <Container
     fluid
-    className="body-container"
   >
     <Row>
       <Col xs={12} md={8} >
@@ -298,7 +270,6 @@ class App extends Component {
             clearSchool={this.clearSchool}
           />
           </Col>
-          
         </Row>
         <Row>
           <Col className="p-0 m-0">
@@ -313,54 +284,15 @@ class App extends Component {
             incidents={[]}
             />
           </Col>
-
         </Row>
       </Col>
-      <Col xs={12} md={4}>
-        <Row className="p-3">
-        <Tabs defaultActiveKey="buy" id="uncontrolled-tab-example" className="mb-3">
-          <Tab eventKey="buy" title="Buy">
-            No Houses Available
-          </Tab>
-          <Tab eventKey="rent" title="Rent">
-            No Apartments Available
-          </Tab>
-          <Tab eventKey="sell" title="Sell">
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-          </Tab>
-        </Tabs>
-      </Row>
-      <Row>
-        {/*<HomeCard 
-          homeData={{"address" : '1234 1st street'}}
-        />*/}
-      </Row>
+      <Col xs={12} md={4} >
+        <SideBar houses={this.state.houses} apartments={this.state.apartments}/>
       </Col>
     </Row>
   </Container>
-
       </>
     );
   }
 }
-
 export default App;

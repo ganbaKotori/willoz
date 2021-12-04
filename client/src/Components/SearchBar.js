@@ -65,7 +65,7 @@ class SearchBar extends Component {
         <Row>
         <Col>
         <Place
-            className="place-box"
+            className="place-box d-none"
             data={this.state.selectedPlace}>
         </Place>
         </Col>

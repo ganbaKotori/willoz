@@ -1,52 +1,58 @@
 .App {
-  text-align: center;
-  font-family: "Courier New", monospace;
-  width: 100%;
+	text-align: center;
+	font-family: "Courier New", monospace;
+	width: 100%;
 }
 
 h1 {
-  font-weight: normal;
-  font-size: 42px;
+	font-weight: normal;
+	font-size: 42px;
 }
 
 .passwords {
-  list-style: none;
-  padding: 0;
-  font-size: 32px;
-  margin-bottom: 2em;
+	list-style: none;
+	padding: 0;
+	font-size: 32px;
+	margin-bottom: 2em;
 }
 
 .more {
-  font-size: 32px;
-  font-family: "Courier New", monospace;
-  border: 2px solid #000;
-  background-color: #fff;
-  padding: 10px 25px;
+	font-size: 32px;
+	font-family: "Courier New", monospace;
+	border: 2px solid #000;
+	background-color: #fff;
+	padding: 10px 25px;
 }
 .more:hover {
-  background-color: #FDD836;
+	background-color: #fdd836;
 }
 .more:active {
-  background-color: #FFEFA9;
+	background-color: #ffefa9;
 }
 
 .form-switch.form-switch-xl .form-check-input {
-  height: 2.5rem;
-  width: calc(4rem + 0.75rem);
-  border-radius: 5rem;
+	height: 2.5rem;
+	width: calc(4rem + 0.75rem);
+	border-radius: 5rem;
 }
 
 .form-switch.form-switch-xl {
-  margin-bottom: 2rem; /* JUST FOR STYLING PURPOSE */
-}
-
-.body-container {
-  height: 300px;
+	margin-bottom: 2rem; /* JUST FOR STYLING PURPOSE */
 }
 
 /* I didn't create this class. It came with react-leaflet */
 .leaflet-container {
-  overflow: hidden;
-  width: 100%;
-  height: 92vh;
+	overflow: hidden;
+	width: 100%;
+	height: 84vh;
+}
+
+.sidebar-tab {
+	height: 79vh;
+	overflow: scroll;
+}
+
+.react-search-box-dropdown {
+	position: "absolute";
+	z-index: 1000;
 }

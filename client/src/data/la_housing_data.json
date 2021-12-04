@@ -1,0 +1,59 @@
+{
+"houses": [{
+    "address" : "1406 E Sepulveda Blvd",
+    "city" : "Carson",
+    "state" : "CA",
+    "zip" : 90745,
+    "bedrooms" : 2,
+    "bathrooms" : 1,
+    "price" : 800000,
+    "images" : ["images/house1.png",
+                "images/house1-1.jpeg",
+                "images/house1-2.jpeg",
+                "images/house1-3.jpeg",
+                "images/house1-4.jpeg"
+              ]
+  },
+  {
+    "address" : "7140 Bandini Blvd.",
+    "city" : "Commerce",
+    "state" : "CA",
+    "zip" : 90040,
+    "bedrooms" : 4,
+    "bathrooms" :2,
+    "price" : 1205000,
+    "images" : ["images/house2.jpeg"]
+  },
+  {
+    "address" : "7900 America Way",
+    "city" : "Paramount",
+    "state" : "CA",
+    "zip" : 90723,
+    "bedrooms" : 8,
+    "bathrooms" :11,
+    "price" : 2250000,
+    "images" : ["images/house3.jpeg"]
+  }],
+  "apartments": [{
+    "address" : "12811 Excelsior Dr",
+    "city" : "Santa Fe Springs",
+    "state" : "CA",
+    "zip" : 90670,
+    "bedrooms" : 2,
+    "bathrooms" : 2,
+    "rent" : 1400,
+    "is_studio" : false,
+    "images" : ["images/apartment1.jpeg"]
+  },
+  {
+    "address" : "12811 Excelsior Dr",
+    "city" : "Santa Fe Springs",
+    "state" : "CA",
+    "zip" : 90670,
+    "bedrooms" : 0,
+    "bathrooms" : 0,
+    "rent" : 2100,
+    "is_studio" : true,
+    "images" : ["images/apartment1.jpeg"]
+  }]
+}

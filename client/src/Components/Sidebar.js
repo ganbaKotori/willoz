@@ -1,0 +1,59 @@
+import React, { Component } from 'react';
+import Row from 'react-bootstrap/Row';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import HouseCard from './HouseCard';
+import ApartmentCard from './ApartmentCard';
+import "../App.css";
+
+
+class SideBar extends Component {
+
+  render() {
+    return(
+        <Row className="p-3">
+<Tabs defaultActiveKey="buy" id="uncontrolled-tab-example" className="mb-3">
+  <Tab eventKey="buy" title="Buy" className="sidebar-tab">
+    {this.props.houses.map((house, idx) =>
+          <HouseCard houseData={house}/>
+            )}
+  </Tab>
+  <Tab eventKey="rent" title="Rent" className="sidebar-tab">
+  {this.props.apartments.map((apartment, idx) =>
+          <ApartmentCard apartmentData={apartment}/>
+            )}
+  </Tab>
+  <Tab eventKey="sell" title="Sell">
+  <Form>
+    <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Label>Email address</Form.Label>
+      <Form.Control type="email" placeholder="Enter email" />
+      <Form.Text className="text-muted">
+        We'll never share your email with anyone else.
+      </Form.Text>
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Label>Street Address</Form.Label>
+      <Form.Control type="email" placeholder="Enter street address" />
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Label>Phone Number</Form.Label>
+      <Form.Control type="email" placeholder="Enter phone number" />
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+      <Form.Check type="checkbox" label="Allow us to call you" />
+    </Form.Group>
+    <Button variant="primary" type="submit">
+      Submit
+    </Button>
+  </Form>
+  </Tab>
+</Tabs>
+</Row>
+    ) 
+  }
+}
+
+export default SideBar;
