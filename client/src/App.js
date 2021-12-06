@@ -287,7 +287,7 @@ class App extends Component {
         </Row>
       </Col>
       <Col xs={12} md={4} >
-        <SideBar houses={this.state.houses} apartments={this.state.apartments}/>
+        <SideBar handler = {this.handler} houses={this.state.houses} apartments={this.state.apartments}/>
       </Col>
     </Row>
   </Container>

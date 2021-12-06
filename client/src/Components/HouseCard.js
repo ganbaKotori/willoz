@@ -22,7 +22,9 @@ function HouseCard(props) {
 				<Card.Text>
 					{props.houseData.city}, {props.houseData.state} {props.houseData.zip}
 				</Card.Text>
-				<Button variant="primary">Locate On Map</Button>
+				<Button variant="primary" onClick={() => props.handler([ 31.2434, 110.2324 ])}>
+					Locate On Map
+				</Button>
 			</Card.Body>
 		</Card>
 	);
