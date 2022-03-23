@@ -12,7 +12,8 @@
                 "images/house1-2.jpeg",
                 "images/house1-3.jpeg",
                 "images/house1-4.jpeg"
-              ]
+              ],
+    "latlon" : [33.804002,-118.243606]
   },
   {
     "address" : "7140 Bandini Blvd.",
