@@ -44,8 +44,7 @@ class App extends Component {
 
   // Fetch passwords after first mount
   componentDidMount() {
-    this.getHomes();
-    this.getPasswords();
+
       navigator.geolocation.getCurrentPosition((e) => {
     this.setState({ 
       geoLocation: e.coords
@@ -55,20 +54,6 @@ class App extends Component {
       geoError: err
     });
   });
-  }
-
-  getPasswords = () => {
-    // Get the passwords and store them in state
-    fetch('/api/passwords')
-      .then(res => res.json())
-      .then(passwords => this.setState({ passwords }));
-  }
-
-  getHomes = () => {
-    // Get the passwords and store them in state
-    fetch('/api/homes')
-      .then(res => res.json())
-      .then(homes => console.log(homes));
   }
 
   getIncome = async () => {
