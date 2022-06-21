@@ -45,7 +45,7 @@ class SideBar extends Component {
 							<ApartmentCard apartmentData={apartment} handler={this.props.handler} />
 						))}
 					</Tab>
-					<Tab eventKey="sell" title="Sell">
+					{/* <Tab eventKey="sell" title="Sell">
 						<Form>
 							<Form.Group className="mb-3" controlId="formBasicEmail">
 								<Form.Label>Email address</Form.Label>
@@ -69,7 +69,7 @@ class SideBar extends Component {
 								Submit
 							</Button>
 						</Form>
-					</Tab>
+					</Tab> */}
 				</Tabs>
 			</Row>
 		);
