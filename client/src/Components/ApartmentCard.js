@@ -13,7 +13,9 @@ function ApartmentCard(props) {
     <h3>${props.apartmentData.rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/month</h3>
     {props.apartmentData.city}, {props.apartmentData.state} {props.apartmentData.zip}
     </Card.Text>
-    <Button variant="primary">Locate On Map</Button>
+    <Button variant="primary" onClick={() => props.handler([props.apartmentData.latitude,props.apartmentData.longitude])}>
+					Locate On Map
+		</Button>
   </Card.Body>
 </Card>
     );

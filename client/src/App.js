@@ -11,6 +11,7 @@ import Offcanvas from './Offcanvas';
 import SearchBar from './Components/SearchBar';
 import SideBar from './Components/Sidebar';
 import PlaceFinder from './Components/PlaceFinder';
+import Modal from 'react-bootstrap/Modal';
 import {FaLocationArrow} from 'react-icons/fa';
 let la_housing_data = require('./data/la_housing_data.json')
 const axios = require('axios');
@@ -20,6 +21,8 @@ class App extends Component {
     super(props);
     this.ChildElement = React.createRef();
     this.handler = this.handler.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleModalShow = this.handleModalShow.bind(this);
   }
 
   state = { zoom: 10, 
@@ -33,12 +36,26 @@ class App extends Component {
             map_bounds: null, 
             center: [34.0522, -118.2437],
             houses: la_housing_data['houses'],
-            apartments: la_housing_data['apartments']}
+            apartments: la_housing_data['apartments'],
+            showModal: false,
+          }
 
   handler(center) {
     this.setState({
       center: center,
       zoom: 17
+    })
+  }
+
+  handleModalClose(){
+    this.setState({
+      showModal: false
+    })
+  }
+
+  handleModalShow(){
+    this.setState({
+      showModal: true
     })
   }
 
@@ -232,14 +249,32 @@ class App extends Component {
   render() {
     return (
       <>
+            <Modal
+        show={this.state.showModal}
+        onHide={this.handleModalClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          I will not close if you click outside me. Don't even try to press
+          escape key.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary">Understood</Button>
+        </Modal.Footer>
+      </Modal>
         <Navbar bg="dark" variant="dark">
     <Container>
     <Navbar.Brand href="#home">Wolliz</Navbar.Brand>
     <Nav className="me-auto">
-      <Nav.Link href="#home">Buy</Nav.Link>
-      <Nav.Link href="#features">Rent</Nav.Link>
-      <Nav.Link href="#sell">Sell</Nav.Link>
-      <Nav.Link href="#about">About</Nav.Link>
+      <Nav.Link href="https://www.github.com/ganbaKotori/willoz">GitHub</Nav.Link>
+      <Nav.Link href="#about" onClick={this.handleModalShow}>About</Nav.Link>
     </Nav>
     </Container>
   </Navbar>

@@ -29,7 +29,19 @@ const PropertyModel = require('../models/property');
 
 module.exports = function(app, sequelize) {
 	const Property = PropertyModel(sequelize, Sequelize);
-	app.get('/api/properties', (req, res) => {
-		Property.findAll().then((users) => res.json(users));
+	app.get('/api/houses', (req, res) => {
+		Property.findAll({
+			where: {
+				apartment_flag: 0
+			}
+		}).then((users) => res.json(users));
+	});
+
+	app.get('/api/apartments', (req, res) => {
+		Property.findAll({
+			where: {
+				apartment_flag: 1
+			  }
+		}).then((users) => res.json(users));
 	});
 };

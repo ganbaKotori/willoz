@@ -7,19 +7,41 @@ import Button from 'react-bootstrap/Button';
 import HouseCard from './HouseCard';
 import ApartmentCard from './ApartmentCard';
 import '../App.css';
+const axios = require("axios")
 
 class SideBar extends Component {
+	state = {
+		houses: [],
+		apartments : [],
+	  }
+
+	componentDidMount() {
+		axios.get(`/api/apartments`)
+		  .then(res => {
+			console.log(res.data)
+			const apartments = res.data;
+			this.setState({ apartments });
+		  })
+		axios.get(`/api/houses`)
+		  .then(res => {
+			console.log(res.data)
+			const houses = res.data;
+			this.setState({ houses });
+		  })
+	}
+
+
 	render() {
 		return (
 			<Row className="p-3">
 				<Tabs defaultActiveKey="buy" id="uncontrolled-tab-example" className="mb-3">
 					<Tab eventKey="buy" title="Buy" className="sidebar-tab">
-						{this.props.houses.map((house, idx) => (
+						{this.state.houses.map((house, idx) => (
 							<HouseCard houseData={house} handler={this.props.handler} />
 						))}
 					</Tab>
 					<Tab eventKey="rent" title="Rent" className="sidebar-tab">
-						{this.props.apartments.map((apartment, idx) => (
+						{this.state.apartments.map((apartment, idx) => (
 							<ApartmentCard apartmentData={apartment} handler={this.props.handler} />
 						))}
 					</Tab>

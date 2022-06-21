@@ -25,7 +25,7 @@ function HouseCard(props) {
 				<Card.Text>
 					{props.houseData.city}, {props.houseData.state} {props.houseData.zip}
 				</Card.Text>
-				<Button variant="primary" onClick={() => props.handler(props.houseData.latlon)}>
+				<Button variant="primary" onClick={() => props.handler([props.houseData.latitude,props.houseData.longitude])}>
 					Locate On Map
 				</Button>
 			</Card.Body>

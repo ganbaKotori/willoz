@@ -24,8 +24,6 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5001;
 app.listen(port);
 
-console.log(`Password generator listening on ${port}`);
-
 let test = async () => {
 	try {
 		await sequelize.authenticate();
